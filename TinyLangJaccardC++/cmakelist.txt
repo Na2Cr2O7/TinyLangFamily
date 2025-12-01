@@ -1,0 +1,43 @@
+cmake_minimum_required(VERSION 3.14)  # 支持 C++20 和 FindSQLite3
+project(TinyLangJaccardC LANGUAGES CXX)
+
+# 设置 C++ 标准
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)  # 使用 -std=c++20 而非 -std=gnu++20
+
+# 启用 UTF-8 源码编码（MSVC 特有）
+if(MSVC)
+    add_compile_options(/utf-8)
+endif()
+
+# 查找 SQLite3 库
+# 方式1：如果系统已安装（如通过 vcpkg、系统包管理器等）
+find_package(SQLite3 REQUIRED)
+
+# 如果 find_package 找不到，可手动指定路径（例如你的 D:\sqlite3）
+# 方式2：手动设置（取消注释以下块并注释掉 find_package）
+# set(SQLITE3_INCLUDE_DIR "D:/sqlite3")
+# set(SQLITE3_LIBRARY "D:/sqlite3/sqlite3.lib")
+# add_library(sqlite3 STATIC IMPORTED)
+# set_target_properties(sqlite3 PROPERTIES
+#     IMPORTED_LOCATION "${SQLITE3_LIBRARY}"
+#     INTERFACE_INCLUDE_DIRECTORIES "${SQLITE3_INCLUDE_DIR}"
+# )
+
+# 添加可执行文件
+add_executable(TinyLangJaccardC TinyLangJaccardC++.cpp)
+
+# 链接 SQLite3
+target_link_libraries(TinyLangJaccardC PRIVATE SQLite::SQLite3)
+
+# 如果使用手动方式（方式2），则替换上行为：
+# target_include_directories(TinyLangJaccardC PRIVATE "${SQLITE3_INCLUDE_DIR}")
+# target_link_libraries(TinyLangJaccardC PRIVATE sqlite3)
+
+# 设置 Windows 控制台子系统（仅 MSVC）
+if(MSVC)
+    set_target_properties(TinyLangJaccardC PROPERTIES
+        LINK_FLAGS "/SUBSYSTEM:CONSOLE"
+    )
+endif()
