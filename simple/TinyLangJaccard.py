@@ -64,7 +64,7 @@ if __name__ == '__main__':
                 continue
             start_time = time()
             answer_fast(question)
-            print(f'耗时: {time() - start_time:.2f}s')
+            print(f'耗时: {time() - start_time:.6f}s')
         except (KeyboardInterrupt, EOFError):
             break
 

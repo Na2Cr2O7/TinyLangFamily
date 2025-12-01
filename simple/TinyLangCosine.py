@@ -31,12 +31,7 @@ vocab_size = len(chartoidx)
 
 
 
-def pad_sequence(text, seq_len=16):
-    """Pad a sequence to a fixed length."""
-    if len(text) > seq_len:  # 截断
-        text = text[:seq_len]
-        return text
-    return text + " " * (seq_len - len(text))
+
 
 # —————— Step 3: 文本 → 固定维度频次向量 ——————
 def text_to_vector(text: str,seq_len=16) -> List[int]:
@@ -98,8 +93,8 @@ if __name__ == '__main__':
     print('数据集:https://modelscope.cn/datasets/qiaojiedongfeng/qiaojiedongfeng')
     try:
         while True:
-            start=time()
             q = input('请输入问题: ')
+            start=time()
             print("→", answer_fast(q))
             print(f"✅ 耗时:{time()-start:.2f}s")
     except (KeyboardInterrupt, EOFError):
