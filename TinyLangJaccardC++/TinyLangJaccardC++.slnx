@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="TinyLangJaccardC++.vcxproj" Id="0729d891-831a-4665-84af-2bfd29102d5b" />
+</Solution>
