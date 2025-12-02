@@ -97,6 +97,13 @@ def train_epoch(epoch, wandb):
             # 【区别1】只保存lora权重即可
             save_lora(model, lora_save_path)
             model.train()
+    lora_save_path = os.path.abspath(f'../out/lora/lora_N_{lm_config.hidden_size}.pth')
+    os.makedirs(os.path.dirname(lora_save_path), exist_ok=True)
+    
+    print(f'lora_save_path:{lora_save_path}',end='\t')
+    save_lora(model, lora_save_path)
+
+
 
 
 def init_model(lm_config):
@@ -128,8 +135,8 @@ def init_distributed_mode():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="MiniMind SFT with LoRA")
     parser.add_argument("--out_dir", type=str, default="../out")
-    parser.add_argument("--epochs", type=int, default=10)
-    parser.add_argument("--batch_size", type=int, default=1)
+    parser.add_argument("--epochs", type=int, default=30)
+    parser.add_argument("--batch_size", type=int, default=4)
     parser.add_argument("--learning_rate", type=float, default=1e-4)
     parser.add_argument("--device", type=str, default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--dtype", type=str, default="bfloat16")
@@ -141,7 +148,7 @@ if __name__ == "__main__":
     parser.add_argument("--grad_clip", type=float, default=1.0)
     parser.add_argument("--warmup_iters", type=int, default=0)
     parser.add_argument("--log_interval", type=int, default=100)
-    parser.add_argument("--save_interval", type=int, default=100)
+    parser.add_argument("--save_interval", type=int, default=1)
     parser.add_argument('--local_rank', type=int, default=-1)
     parser.add_argument('--hidden_size', default=512, type=int)
     parser.add_argument('--num_hidden_layers', default=8, type=int)
