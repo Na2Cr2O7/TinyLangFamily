@@ -29,7 +29,7 @@ def init_model(args):
         if args.lora_name != 'None':
             print(f'加载LORA模型: {args.lora_name}{os.path.abspath(f'./out/lora/lora_N_384.pth')}')
             apply_lora(model)
-            load_lora(model, f'./out/lora/lora_N_384.pth')
+            load_lora(model, f'./out/lora/lora_N_512.pth')
     else:
         transformers_model_path = './MiniMind2'
         tokenizer = AutoTokenizer.from_pretrained(transformers_model_path)
@@ -120,7 +120,7 @@ def main():
     # 模型未经过外推微调时，在更长的上下文的chat_template时难免出现性能的明显退化，因此需要注意此处设置
     parser.add_argument('--history_cnt', default=0, type=int)
     parser.add_argument('--load', default=0, type=int, help="0: 原生torch权重，1: transformers加载")
-    parser.add_argument('--model_mode', default=0, type=int,
+    parser.add_argument('--model_mode', default=1, type=int,
                         help="0: 预训练模型，1: SFT-Chat模型，2: RLHF-Chat模型，3: Reason模型，4: RLAIF-Chat模型")
     args = parser.parse_args()
 
